@@ -1,12 +1,14 @@
 import { Router } from 'express';
-
-import * as ApiController from '../controllers/apiController';
+import { prisma } from '../Libs/prisma';
 
 const router = Router();
 
-router.post('/register', ApiController.register);
-router.post('/login', ApiController.login);
-
-router.get('/list', ApiController.list);
-
 export default router;
+
+router.get('/ping', (req,res) =>{
+    res.json({pong:true})
+})
+
+router.get('/test', (req,res) => {
+    res.json({testado:true})
+})
