@@ -12,3 +12,13 @@ router.get('/ping', (req,res) =>{
 router.get('/test', (req,res) => {
     res.json({testado:true})
 })
+
+router.post('/user', async (req,res) =>{
+    const user = await prisma.user.create({
+        data:{
+            name: 'William',
+            email: 'william1@gmail.com',
+        }
+    });
+    res.json({user});
+})
