@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { prisma } from '../Libs/prisma';
+import { createUser } from '../Services/User';
 
 const router = Router();
 
@@ -14,11 +15,10 @@ router.get('/test', (req,res) => {
 })
 
 router.post('/user', async (req,res) =>{
-    const user = await prisma.user.create({
-        data:{
-            name: 'William',
-            email: 'william1@gmail.com',
-        }
-    });
+    const user = await createUser({
+        name: 'will',
+        email:'will@gmail.com'
+    }
+    )
     res.json({user});
 })
