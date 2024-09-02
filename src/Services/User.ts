@@ -31,6 +31,15 @@ export const createUsers = async (users: Prisma.UserCreateInput[]) => {
 
 export const getAllUsers = async () => {
   const users = await prisma.user.findMany({
+    where: {
+      Posts: {
+        none: {
+          title: {
+            startsWith: "titulo",
+          }
+        }
+      }
+    },
     select: {
       id: true,
       name: true,
@@ -42,7 +51,7 @@ export const getAllUsers = async () => {
 };
 
 export const getUserByEmail = async (email: string) => {
-  const user = await prisma.user.findUnique({
+  const user = await prisma.user.findFirst({
     where: { email },
   });
   return user;
@@ -77,11 +86,11 @@ export const createPosts = async (posts: Prisma.PostUncheckedCreateInput[]) => {
     });
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      if (error.code === "P2002") {
-        return { error: "Email already exists" };
+      if (error.code === "P1002") {
+        return {
+          error: "Algo de errado aconteceu, tente novamente mais tarde",
+        };
       }
     }
-
-    console.error(error);
   }
 };

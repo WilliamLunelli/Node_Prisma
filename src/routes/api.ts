@@ -1,6 +1,14 @@
 import { Router } from "express";
 import { prisma } from "../Libs/prisma";
-import { createPost, createPosts, createUser, createUsers, getAllUsers, getPostById, getUserByEmail } from "../Services/User";
+import {
+  createPost,
+  createPosts,
+  createUser,
+  createUsers,
+  getAllUsers,
+  getPostById,
+  getUserByEmail,
+} from "../Services/User";
 import { count, error } from "console";
 import { title } from "process";
 
@@ -19,8 +27,8 @@ router.get("/test", (req, res) => {
 router.post("/user", async (req, res) => {
   //Validar dados recebidos
   const user = await createUser({
-    name: "will2",
-    email: "will2@gmail.com",
+    name: "testador 1",
+    email: "testador1@gmail.com",
     Posts: {
       create: {
         title: "Teste de post",
@@ -31,12 +39,11 @@ router.post("/user", async (req, res) => {
   res.status(201).json({ user });
 });
 
-
 router.post("/users", async (req, res) => {
   const result = await createUsers([
-    { name: "will", email: "jeferçon@gmail.com" },
-    { name: "jeferson", email: "on@gmail.com" },
-    { name: "joana", email: "joaninha@gmail.com" },
+    { name: "will", email: "jeferçon@hotmail.com" },
+    { name: "jeferson", email: "on@hotmail.com" },
+    { name: "joana", email: "joaninha@hotmail.com" },
   ]);
   res.json({ result: result });
 });
@@ -46,31 +53,30 @@ router.get("/users", async (req, res) => {
   res.json({ result: result });
 });
 
-router.get("/user", async(req, res) => {
-  const result = await getUserByEmail('william@gmail.com');
+router.get("/user", async (req, res) => {
+  const result = await getUserByEmail("william@gmail.com");
   res.json(result);
-})
-
-router.get("/post", async(req, res) =>{
-  const result = await getPostById(1)
 });
 
-router.post("/post", async(req,res)=>{
+router.get("/post", async (req, res) => {
+  const result = await getPostById(1);
+});
+
+router.post("/post", async (req, res) => {
   const result = await createPost({
     userID: 1,
     title: "testezinho de post",
     body: "corpo de post",
   });
 
-  res.json(result)
-})
-
+  res.json(result);
+});
 
 router.post("/posts", async (req, res) => {
   const result = await createPosts([
-    {userID:1, title: "teste denovo", body: "pao de batata e massa"},
-    {userID:1, title: "teste denovo", body: "pao de batata e massa"},
-    {userID:1, title: "teste denovo", body: "pao de batata e massa"}
+    { userID: 1, title: "teste denovo", body: "pao de batata e massa" },
+    { userID: 1, title: "teste denovo", body: "pao de batata e massa" },
+    { userID: 1, title: "teste denovo", body: "pao de batata e massa" },
   ]);
   res.json(result);
 });
