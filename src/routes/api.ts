@@ -8,6 +8,8 @@ import {
   getAllUsers,
   getPostById,
   getUserByEmail,
+  updateUser,
+  updateUsers,
 } from "../Services/User";
 import { count, error } from "console";
 import { title } from "process";
@@ -80,3 +82,13 @@ router.post("/posts", async (req, res) => {
   ]);
   res.json(result);
 });
+
+router.put('/user', async (req, res) => {
+  const result = await updateUser();
+  res.json( {result} )
+})
+
+router.put('/users', async (req, res) => {
+  const result = await updateUsers();
+  res.json( {result} )
+})

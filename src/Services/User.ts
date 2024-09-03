@@ -30,22 +30,13 @@ export const createUsers = async (users: Prisma.UserCreateInput[]) => {
 };
 
 export const getAllUsers = async () => {
+  let page = 1;
+  let perPage = 2
+  let skip = (page - 1) * perPage
+
   const users = await prisma.user.findMany({
-    where: {
-      Posts: {
-        none: {
-          title: {
-            startsWith: "titulo",
-          }
-        }
-      }
-    },
-    select: {
-      id: true,
-      name: true,
-      email: true,
-      status: true,
-    },
+    skip: skip,
+    take: 2,
   });
   return users;
 };
@@ -94,3 +85,30 @@ export const createPosts = async (posts: Prisma.PostUncheckedCreateInput[]) => {
     }
   }
 };
+
+export const updateUser = async () => {
+  const updatedUser = await prisma.user.update({
+    where: {
+      id: 1
+    },
+    data: {
+      name: 'William Lunelli',
+      role: 'Admin'
+    }
+  });
+  return updatedUser
+}
+
+export const updateUsers = async () => {
+  const updatedUsers = await prisma.user.updateMany({
+    where: {
+      email: {
+        endsWith: '@hotmail.com'
+      }
+    },
+    data: {
+      status: false
+    }
+  });
+  return updatedUsers
+}
