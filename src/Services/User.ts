@@ -2,16 +2,13 @@ import { Prisma } from "@prisma/client";
 import { prisma } from "../Libs/prisma";
 
 export const createUser = async (data: Prisma.UserCreateInput) => {
-  try {
-    const user = await prisma.user.create({ data });
-    return user;
-  } catch (error) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      if (error.code === "P2002") {
-        return { error: "Email already exists" };
-      }
-    }
-  }
+  const result = await prisma.user.upsert({
+    where: { email: data.email },
+    update: {},
+    create: data
+  })
+
+  return result;
 };
 
 export const createUsers = async (users: Prisma.UserCreateInput[]) => {
@@ -101,14 +98,19 @@ export const updateUser = async () => {
 
 export const updateUsers = async () => {
   const updatedUsers = await prisma.user.updateMany({
-    where: {
-      email: {
-        endsWith: '@hotmail.com'
-      }
-    },
     data: {
-      status: false
+      status: true
     }
   });
   return updatedUsers
+}
+
+export const deleteUser = async () => {
+  const deletedUser = await prisma.user.delete({
+    where:{
+      id: 36,
+    }
+  });
+  
+  return deletedUser;
 }

@@ -5,6 +5,7 @@ import {
   createPosts,
   createUser,
   createUsers,
+  deleteUser,
   getAllUsers,
   getPostById,
   getUserByEmail,
@@ -29,8 +30,8 @@ router.get("/test", (req, res) => {
 router.post("/user", async (req, res) => {
   //Validar dados recebidos
   const user = await createUser({
-    name: "testador 1",
-    email: "testador1@gmail.com",
+    name: "testador 3",
+    email: "testador3@gmail.com",
     Posts: {
       create: {
         title: "Teste de post",
@@ -91,4 +92,9 @@ router.put('/user', async (req, res) => {
 router.put('/users', async (req, res) => {
   const result = await updateUsers();
   res.json( {result} )
+})
+
+router.delete('/user', async (req, res) => {
+  const result = await deleteUser();
+  res.json({ result })
 })

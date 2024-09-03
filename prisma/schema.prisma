@@ -30,7 +30,7 @@ model Post {
   subtitle String?
   body String
   userID Int
-  author User @relation(fields: [userID], references: [id])
+  author User @relation(fields: [userID], references: [id], onDelete: Cascade)
 
   @@map("Posts")
 }
