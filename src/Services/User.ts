@@ -114,3 +114,13 @@ export const deleteUser = async () => {
   
   return deletedUser;
 }
+
+export const deleteUsers = async () => {
+  const deletedUsers = await prisma.user.deleteMany({
+    where:{
+      id: 36,
+    }
+  });
+  
+  return deletedUsers;
+}

@@ -6,6 +6,7 @@ import {
   createUser,
   createUsers,
   deleteUser,
+  deleteUsers,
   getAllUsers,
   getPostById,
   getUserByEmail,
@@ -96,5 +97,11 @@ router.put('/users', async (req, res) => {
 
 router.delete('/user', async (req, res) => {
   const result = await deleteUser();
+  res.json({ result })
+})
+
+
+router.delete('/users', async (req, res) => {
+  const result = await deleteUsers();
   res.json({ result })
 })
